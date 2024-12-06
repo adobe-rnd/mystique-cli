@@ -1,0 +1,17 @@
+openai
+python-dotenv
+requests
+requests_toolbelt
+requests
+jsonschema
+backoff
+langchain
+langchain-openai
+tqdm
+chromadb
+colorama
+unidiff
+pygments
+pathspec
+InquirerPy
+tornado

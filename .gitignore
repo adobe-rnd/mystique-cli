@@ -1,0 +1,47 @@
+# Ignore log files
+*.log
+
+# Ignore environment variables
+.env
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore IDE specific files
+.idea/
+
+# Ignore Python compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+
+# Ignore virtual environment directories
+venv/
+ENV/
+env/
+.venv/
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore coverage reports
+htmlcov/
+.coverage
+.tox/
+.nox/
+.cache
+coverage.xml
+*.cover
+.hypothesis/
+
+# Ignore mypy type checker reports
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Ignore Pyre type checker reports
+.pyre/
+
+# Ignore data files
+chroma/
