@@ -4,7 +4,9 @@ import pathspec
 
 
 class FileIndexer:
-    def __init__(self, project_directory: str, llm_client, context_db, max_workers: int = 10):
+    def __init__(
+        self, project_directory: str, llm_client, context_db, max_workers: int = 10
+    ):
         self.project_directory = project_directory
         self.llm_client = llm_client
         self.context_db = context_db
@@ -12,13 +14,15 @@ class FileIndexer:
         self.ignore_spec = self._load_gitignore()
 
     def _load_gitignore(self):
-        gitignore_path = os.path.join(self.project_directory, '.gitignore')
+        gitignore_path = os.path.join(self.project_directory, ".gitignore")
         if not os.path.exists(gitignore_path):
             return None
 
-        with open(gitignore_path, 'r') as f:
+        with open(gitignore_path, "r") as f:
             gitignore_content = f.read()
-        return pathspec.PathSpec.from_lines('gitwildmatch', gitignore_content.splitlines())
+        return pathspec.PathSpec.from_lines(
+            "gitwildmatch", gitignore_content.splitlines()
+        )
 
     def _is_ignored(self, file_path):
         if self.ignore_spec is None:
@@ -35,7 +39,7 @@ class FileIndexer:
                 if self._is_ignored(file_path):
                     continue  # Skip ignored files
 
-                if file.endswith(('.js', '.html', '.css')):
+                if file.endswith((".js", ".html", ".css")):
                     files_to_index.append(file_path)
 
         # Use ThreadPoolExecutor to parallelize the indexing process
@@ -48,11 +52,12 @@ class FileIndexer:
     def _process_file(self, file_path: str):
         try:
             # Read the content of the file
-            with open(file_path, 'r', encoding='utf-8') as f:
+            with open(file_path, "r", encoding="utf-8") as f:
                 file_content = f.read()
 
             # Generate a summary of the file content
-            summary = self.llm_client.generate_completion(f"""
+            summary = self.llm_client.generate_completion(
+                f"""
             We are indexing source code files in a project to enhance search and retrieval capabilities.
             
             Please provide a concise yet comprehensive summary of the file's content, purpose, and functionality. Focus on key elements such as:
@@ -68,7 +73,8 @@ class FileIndexer:
             {file_content}
             
             Summary:
-            """)
+            """
+            )
 
             self.context_db.store_file(file_path=file_path, content=summary)
 
@@ -87,7 +93,7 @@ if __name__ == "__main__":
     indexer = FileIndexer(
         project_directory="../server/generation_pipelines/components",
         llm_client=llm_client,
-        context_db=context_db
+        context_db=context_db,
     )
     indexer.index_files()
 
