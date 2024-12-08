@@ -1,0 +1,39 @@
+classDiagram
+    direction BT
+    class LlmClient {
+        +generate_completion(prompt, json_schema)
+        +generate_embedding(text)
+    }
+
+    class ContextStorage {
+        +store_file(file_path, content)
+        +get_similar_files(prompt, n)
+        +is_empty()
+        +reset()
+    }
+
+    class FileIndexer {
+        +index_files()
+        +has_been_indexed()
+    }
+
+    class ChangeProcessor {
+        +compute_changes(prompt)
+        +apply_changes(changes)
+        +rollback_changes(changes)
+    }
+
+    class CLIApp {
+        +run_indexing()
+        +make_changes()
+        +accept_or_reject_changes(changes)
+        +rollback_changes()
+    }
+
+    LlmClient --> ContextStorage
+    LlmClient --> FileIndexer
+    ContextStorage --> FileIndexer
+    ContextStorage --> ChangeProcessor
+    LlmClient --> ChangeProcessor
+    FileIndexer --> CLIApp
+    ChangeProcessor --> CLIApp

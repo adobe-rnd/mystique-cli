@@ -1,0 +1,23 @@
+
+sequenceDiagram
+    participant User
+    participant CLI as CLI Application
+    participant LLM as LlmClient
+    participant ContextDB as ContextStorage
+    participant ChangeProcessor
+
+    CLI->>User: Prompt for changes
+    User->>CLI: Provide change prompt
+    CLI->>ChangeProcessor: Compute changes
+    ChangeProcessor->>ContextDB: Get similar files
+    ContextDB-->>ChangeProcessor: Return similar files
+    ChangeProcessor->>LLM: Generate changes based on prompt and similar files
+    LLM-->>ChangeProcessor: Return changes
+    ChangeProcessor-->>CLI: Return changes
+    CLI->>User: Display changes
+    User->>CLI: Accept or reject changes
+    CLI->>ChangeProcessor: Apply or rollback changes
+    ChangeProcessor->>ChangeProcessor: Apply or rollback changes
+    ChangeProcessor->>ContextDB: Update context DB
+    ChangeProcessor-->>CLI: Changes applied or rolled back
+    CLI->>User: Notify changes applied or rolled back

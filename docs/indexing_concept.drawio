@@ -1,0 +1,61 @@
+<mxfile host="65bd71144e">
+    <diagram name="Indexing Concept" id="0">
+        <mxGraphModel dx="181" dy="755" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="Start Application" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="60" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="Check if indexing is needed" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="140" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Start indexing" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="220" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="Reset context DB" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="300" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="Load .gitignore" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="380" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="Walk through project directory" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="460" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="Generate summary for each file" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="540" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="Store file summary and embeddings" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="620" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="Indexing complete" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="700" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" style="sketch=1;curveFitting=1;jiggle=2;" parent="1" source="2" target="3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" style="sketch=1;curveFitting=1;jiggle=2;" parent="1" source="3" target="4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" style="sketch=1;curveFitting=1;jiggle=2;" parent="1" source="4" target="5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" style="sketch=1;curveFitting=1;jiggle=2;" parent="1" source="5" target="6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" style="sketch=1;curveFitting=1;jiggle=2;" parent="1" source="6" target="7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" style="sketch=1;curveFitting=1;jiggle=2;" parent="1" source="7" target="8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" style="sketch=1;curveFitting=1;jiggle=2;" parent="1" source="8" target="9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" style="sketch=1;curveFitting=1;jiggle=2;" parent="1" source="9" target="10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

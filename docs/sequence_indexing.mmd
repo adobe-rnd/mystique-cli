@@ -1,0 +1,23 @@
+
+sequenceDiagram
+    participant User
+    participant CLI as CLI Application
+    participant Indexer as FileIndexer
+    participant LLM as LlmClient
+    participant ContextDB as ContextStorage
+
+    User->>CLI: Start Application
+    CLI->>Indexer: Check if indexing is needed
+    Indexer->>ContextDB: Check if context DB is empty
+    ContextDB-->>Indexer: Return is_empty status
+    Indexer-->>CLI: Return indexing status
+    CLI->>User: Prompt to start indexing
+    User->>CLI: Confirm indexing
+    CLI->>Indexer: Start indexing
+    Indexer->>ContextDB: Reset context DB
+    Indexer->>Indexer: Load .gitignore
+    Indexer->>Indexer: Walk through project directory
+    Indexer->>LLM: Generate summary for each file
+    LLM-->>Indexer: Return file summary
+    Indexer->>ContextDB: Store file summary and embeddings
+    Indexer-->>CLI: Indexing complete
