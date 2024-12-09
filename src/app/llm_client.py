@@ -1,5 +1,5 @@
 import os
-from typing import Union, List, Dict, Any
+from typing import Union, Dict, Any
 
 from langchain_openai import (
     AzureChatOpenAI,

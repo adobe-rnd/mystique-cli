@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mystique"
+version = "0.1"
+description = "A general-purpose AI coding assistant."
+authors = [
+    { name = "Vitaly Tsaplin" }
+]
+dependencies = [
+    "openai",
+    "python-dotenv",
+    "requests",
+    "requests_toolbelt",
+    "jsonschema",
+    "backoff",
+    "langchain",
+    "langchain-openai",
+    "tqdm",
+    "chromadb",
+    "colorama",
+    "unidiff",
+    "pygments",
+    "pathspec",
+    "InquirerPy",
+    "tornado"
+]
+
+[project.scripts]
+mystique = "app.app:main"

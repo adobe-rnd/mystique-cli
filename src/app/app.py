@@ -1,8 +1,7 @@
 import os
 import sys
 import time
-import subprocess
-from typing import Dict, Optional
+from typing import Dict
 from threading import Thread, Event
 
 from colorama import init, Fore
@@ -13,11 +12,9 @@ from app.context_storage import ContextStorage
 from app.file_indexer import FileIndexer
 from app.llm_client import LlmClient
 
-# Initialize colorama for cross-platform support
 init(autoreset=True)
 
 changes_made = []
-aem_process: Optional[subprocess.Popen] = None  # Track the 'aem preview' process
 
 project_directory = os.getcwd()
 print(Fore.GREEN + f"Current project directory: {project_directory}")
@@ -31,31 +28,6 @@ change_processor = ChangeProcessor(
 file_indexer = FileIndexer(
     project_directory=project_directory, llm_client=llm_client, context_db=context_db
 )
-
-
-def start_aem_preview():
-    """Starts the 'aem preview' command in a subprocess."""
-    global aem_process
-    if aem_process is None or aem_process.poll() is not None:
-        print(Fore.GREEN + "Starting 'aem preview'...")
-        aem_process = subprocess.Popen(
-            ["aem", "up"], stdout=subprocess.PIPE, stderr=subprocess.PIPE
-        )
-    else:
-        print(Fore.YELLOW + "'aem preview' is already running.")
-
-
-def stop_aem_preview():
-    """Stops the 'aem preview' subprocess."""
-    global aem_process
-    if aem_process and aem_process.poll() is None:
-        print(Fore.GREEN + "Stopping 'aem preview'...")
-        aem_process.terminate()
-        aem_process.wait()
-        print(Fore.GREEN + "'aem preview' stopped.")
-        aem_process = None
-    else:
-        print(Fore.RED + "'aem preview' is not running.")
 
 
 def rotating_animation(message: str, stop_event: Event):
@@ -138,35 +110,29 @@ def rollback_changes():
 def main_menu():
     while True:
         choices = [
-            {"name": "Provide a prompt to modify files", "value": "1"},
+            {"name": "Modify files based on a prompt", "value": "1"},
         ]
 
         if changes_made:
-            choices.append({"name": "Rollback the last set of changes", "value": "2"})
+            choices.append({"name": "Undo the last set of changes", "value": "2"})
         else:
             choices.append(
                 {
-                    "name": "Rollback changes (no changes to rollback)",
+                    "name": "Undo changes (no changes to undo)",
                     "value": "2",
                     "disabled": True,
                 }
             )
 
-        # Add options to start/stop 'aem preview'
-        if aem_process is None or aem_process.poll() is not None:
-            choices.append({"name": "Start 'aem preview'", "value": "3"})
-        else:
-            choices.append({"name": "Stop 'aem preview'", "value": "4"})
-
         choices.extend(
             [
-                {"name": "Reindex the project files", "value": "5"},
-                {"name": "Exit the application", "value": "6"},
+                {"name": "Reindex project files", "value": "3"},
+                {"name": "Exit application", "value": "4"},
             ]
         )
 
         choice = inquirer.select(
-            message="Select an action:", choices=choices, max_height=10
+            message="Choose an action:", choices=choices, max_height=10
         ).execute()
 
         if choice == "1":
@@ -174,14 +140,9 @@ def main_menu():
         elif choice == "2":
             rollback_changes()
         elif choice == "3":
-            start_aem_preview()
-        elif choice == "4":
-            stop_aem_preview()
-        elif choice == "5":
             run_indexing()
-        elif choice == "6":
+        elif choice == "4":
             print(Fore.GREEN + "Exiting the application.")
-            stop_aem_preview()  # Ensure 'aem preview' is stopped before exiting
             sys.exit(0)
 
 
