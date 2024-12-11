@@ -263,15 +263,13 @@ def display_main_menu(change_processor, file_indexer):
     while True:
         choices = [
             {"name": "Modify files using a prompt", "value": "1"},
-            {
-                "name": "Undo the last set of changes",
-                "value": "2" if changes_made else "2",
-                "disabled": not changes_made,
-            },
-            {"name": "Reindex project files", "value": "3"},
-            {"name": "Change settings", "value": "4"},
-            {"name": "Exit", "value": "5"},
+            {"name": "Reindex project files", "value": "2"},
+            {"name": "Change settings", "value": "3"},
+            {"name": "Exit", "value": "4"},
         ]
+
+        if changes_made:
+            choices.insert(1, {"name": "Undo the last set of changes", "value": "5"})
 
         choice = inquirer.select(
             message="Choose an action:", choices=choices, max_height=10
@@ -280,13 +278,13 @@ def display_main_menu(change_processor, file_indexer):
         if choice == "1":
             handle_process_changes(change_processor)
         elif choice == "2":
-            handle_revert_changes(change_processor)
-        elif choice == "3":
             handle_perform_indexing(file_indexer)
-        elif choice == "4":
+        elif choice == "3":
             display_settings_menu()
-        elif choice == "5":
+        elif choice == "4":
             handle_exit_app()
+        elif choice == "5":
+            handle_revert_changes(change_processor)
 
 
 def display_startup_info():

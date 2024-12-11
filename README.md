@@ -6,10 +6,10 @@ This command line tool is a general-purpose AI-powered coding assistant that mak
 
 ## Installation
 
-To install the command line tool locally from the current project folder, run:
+To install the command line tool from PyPI, run:
 
 ```bash
-pip install -e .
+pip install coda-ai-assistant
 ```
 
 ## Configuration

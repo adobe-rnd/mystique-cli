@@ -48,3 +48,6 @@ chroma/
 
 # Ignore Coda data files
 .coda/
+
+# Ignore distribution directories
+dist/

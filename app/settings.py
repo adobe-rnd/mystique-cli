@@ -64,8 +64,10 @@ settings: ProjectSettings = None
 
 def load_project_settings():
     global settings
+    if not os.path.exists(BASE_DIR):
+        os.makedirs(BASE_DIR)  # Create the .coda directory if it doesn't exist
     if not os.path.exists(CONFIG_FILE_PATH):
-        save_project_settings(ProjectSettings)
+        save_project_settings(ProjectSettings())
     try:
         with open(CONFIG_FILE_PATH, "r") as f:
             settings = ProjectSettings(**json.load(f))
@@ -75,6 +77,8 @@ def load_project_settings():
 
 def save_project_settings(new_settings: ProjectSettings):
     global settings
+    if not os.path.exists(BASE_DIR):
+        os.makedirs(BASE_DIR)  # Create the .coda directory if it doesn't exist
     try:
         with open(CONFIG_FILE_PATH, "w") as f:
             f.write(new_settings.model_dump_json(indent=4))
