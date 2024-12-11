@@ -77,6 +77,7 @@ class ChangeProcessor:
                 ]
             }}
         4. **Provide** the complete modified source code for each changed file in the 'new_content' field.
+        5. **Never remove** any existing code unless it is redundant or obsolete.
         
         Ensure your modifications are accurate, concise, and directly address the user's request.
         """
@@ -120,13 +121,13 @@ class ChangeProcessor:
                         continue
 
                     with open(file_path, "r", encoding="utf-8") as file:
-                        original_content = file.readlines()
+                        original_content = file.read()
                         previous_file_states["files"].append(
                             {"file_path": file_path, "new_content": original_content}
                         )
 
                     with open(file_path, "w", encoding="utf-8") as file:
-                        file.writelines(new_content)
+                        file.write(new_content)
 
                     logger.info(f"Applied changes to {file_path}")
 
@@ -151,17 +152,14 @@ class ChangeProcessor:
         try:
             for file_change in changes["files"]:
                 file_path = file_change["file_path"]
-                new_content = file_change["new_content"]
+                original_content = file_change["new_content"]
                 try:
                     if not os.path.exists(file_path):
                         logger.error(f"Error: File not found - {file_path}")
                         continue
 
-                    with open(file_path, "r", encoding="utf-8") as file:
-                        original_lines = file.readlines()
-
                     with open(file_path, "w", encoding="utf-8") as file:
-                        file.writelines(new_content)
+                        file.write(original_content)
 
                     logger.info(f"Rolled back changes to {file_path}")
 
