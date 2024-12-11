@@ -95,8 +95,8 @@ class FileIndexer:
 
 
 if __name__ == "__main__":
-    from llm_client import LlmClient
-    from context_storage import ContextStorage
+    from app.llm_client import LlmClient
+    from app.context_storage import ContextStorage
 
     llm_client = LlmClient()
     context_db = ContextStorage(llm_client)
