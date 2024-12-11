@@ -35,8 +35,7 @@ class FileIndexer:
         rel_path = os.path.relpath(file_path, self.project_directory)
         return self.ignore_spec.match_file(rel_path)
 
-    def index_files(self):
-        self.context_db.reset()
+    def get_files_to_index(self):
         files_to_index = []
         for root, _, files in os.walk(self.project_directory):
             for file in files:
@@ -46,6 +45,12 @@ class FileIndexer:
 
                 if any(file.endswith(pattern) for pattern in self.file_patterns):
                     files_to_index.append(file_path)
+        return files_to_index
+
+    def index_files(self, files_to_index=None):
+        self.context_db.reset()
+        if files_to_index is None:
+            files_to_index = self.get_files_to_index()
 
         # Use ThreadPoolExecutor to parallelize the indexing process
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:

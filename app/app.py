@@ -88,16 +88,25 @@ def check_essential_config_values():
 def perform_indexing(file_indexer):
     logger.info("Indexing (RAG) in progress... This might take a few moments.")
 
-    # Start the animation in a separate thread
-    stop_event = Event()
-    anim_thread = Thread(
-        target=show_rotating_animation,
-        args=("Indexing (RAG) in progress...", stop_event),
-    )
-    anim_thread.start()
-
     try:
-        indexed_file_count = file_indexer.index_files()
+        files_to_index = file_indexer.get_files_to_index()
+        file_count = len(files_to_index)
+        user_input = inquirer.confirm(
+            message=f"{file_count} files found. Do you want to proceed with indexing?"
+        ).execute()
+        if not user_input:
+            logger.info("Indexing aborted by the user.")
+            return
+
+        # Start the animation in a separate thread
+        stop_event = Event()
+        anim_thread = Thread(
+            target=show_rotating_animation,
+            args=("Indexing in progress...", stop_event),
+        )
+        anim_thread.start()
+
+        indexed_file_count = file_indexer.index_files(files_to_index)
     finally:
         # Signal the animation thread to stop
         stop_event.set()
@@ -264,7 +273,6 @@ def display_main_menu(change_processor, file_indexer):
             {"name": "Exit", "value": "5"},
         ]
 
-        print()
         choice = inquirer.select(
             message="Choose an action:", choices=choices, max_height=10
         ).execute()
@@ -305,14 +313,11 @@ def run():
     print(
         Fore.GREEN
         + r"""
-   (         (         
-   )\        )\ )   )  
- (((_)  (   (()/(( /(  
- )\___  )\   ((_))(_)) 
-((/ __|((_)  _| ((_)_  
- | (__/ _ \/ _` / _` | 
-  \___\___/\__,_\__,_| 
-                       
+_________     _________       
+__  ____/___________  /_____ _
+_  /    _  __ \  __  /_  __ `/
+/ /___  / /_/ / /_/ / / /_/ / 
+\____/  \____/\__,_/  \__,_/  
           """
     )
 
