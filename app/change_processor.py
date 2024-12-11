@@ -106,7 +106,7 @@ class ChangeProcessor:
         # Start the animation in a separate thread
         stop_event = Event()
         anim_thread = Thread(
-            target=rotating_animation, args=("Applying changes...", stop_event)
+            target=show_rotating_animation, args=("Applying changes...", stop_event)
         )
         anim_thread.start()
 
