@@ -1,5 +1,7 @@
 import os
+import logging
 from typing import Union, Dict, Any
+from app.settings import BASE_DIR, get_project_settings
 
 from langchain_openai import (
     AzureChatOpenAI,
@@ -9,33 +11,26 @@ from langchain_openai import (
 )
 from dotenv import load_dotenv
 
-dotenv_path = os.path.join(os.getcwd(), ".env")
+logger = logging.getLogger(__name__)
+
+dotenv_path = os.path.join(BASE_DIR, ".env")
 load_dotenv(dotenv_path)
 
-ENV_PREFIX = "MYSTIQUE_"
+ENV_PREFIX = "CODA_"
 
 DEFAULT_API_PROVIDER = "openai"
 
 
-def get_env_var(var_name: str, default_value: str = None) -> str:
-    prefixed_var_name = f"{ENV_PREFIX}{var_name}"
-    return os.getenv(prefixed_var_name) or os.getenv(var_name, default_value)
-
-
-api_key = get_env_var("OPENAI_API_KEY")
-if not api_key:
-    raise ValueError("OpenAI API key must be provided.")
-
-
 class LlmClient:
     def __init__(self):
-        api_provider = get_env_var("AZURE_OR_OPENAI", DEFAULT_API_PROVIDER).lower()
+        settings = get_project_settings()
+        api_provider = settings.api_provider
 
         if api_provider == "azure":
-            azure_api_key = get_env_var("AZURE_API_KEY")
-            azure_endpoint = get_env_var("AZURE_ENDPOINT")
-            azure_completion_deployment = get_env_var("AZURE_COMPLETION_DEPLOYMENT")
-            azure_embedding_deployment = get_env_var("AZURE_EMBEDDING_DEPLOYMENT")
+            azure_api_key = settings.azure_api_key
+            azure_endpoint = settings.azure_endpoint
+            azure_completion_model = settings.azure_completion_model
+            azure_embedding_model = settings.azure_embedding_model
 
             if not azure_endpoint or not azure_api_key:
                 raise ValueError(
@@ -45,7 +40,7 @@ class LlmClient:
             self.llm = AzureChatOpenAI(
                 openai_api_key=azure_api_key,
                 azure_endpoint=azure_endpoint,
-                deployment_name=azure_completion_deployment,
+                deployment_name=azure_completion_model,
                 api_version="2024-07-01-preview",
                 max_tokens=4096,
             )
@@ -53,19 +48,19 @@ class LlmClient:
             self.embeddings = AzureOpenAIEmbeddings(
                 api_key=azure_api_key,
                 azure_endpoint=azure_endpoint,
-                deployment=azure_embedding_deployment,
+                deployment=azure_embedding_model,
                 api_version="2024-07-01-preview",
             )
 
-            print("Azure OpenAI initialized.")
+            logger.info("Azure OpenAI initialized.")
 
         elif api_provider == "openai":
-            api_key = os.getenv("OPENAI_API_KEY")
+            api_key = settings.openai_api_key
             self.llm = ChatOpenAI(api_key=api_key)
 
             self.embeddings = OpenAIEmbeddings(api_key=api_key)
 
-            print("OpenAI initialized.")
+            logger.info("OpenAI initialized.")
 
         else:
             raise ValueError(

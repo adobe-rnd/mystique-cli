@@ -45,3 +45,6 @@ dmypy.json
 
 # Ignore data files
 chroma/
+
+# Ignore Coda data files
+.coda/

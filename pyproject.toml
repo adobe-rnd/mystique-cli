@@ -1,32 +1,35 @@
-[build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
-
-[project]
+[tool.poetry]
 name = "coda"
 version = "0.1"
 description = "A general-purpose AI coding assistant."
-authors = [
-    { name = "Vitaly Tsaplin" }
-]
-dependencies = [
-    "openai",
-    "python-dotenv",
-    "requests",
-    "requests_toolbelt",
-    "jsonschema",
-    "backoff",
-    "langchain",
-    "langchain-openai",
-    "tqdm",
-    "chromadb",
-    "colorama",
-    "unidiff",
-    "pygments",
-    "pathspec",
-    "InquirerPy",
-    "tornado"
+authors = ["Vitaly Tsaplin"]
+packages = [
+    { include = "app" }
 ]
 
-[project.scripts]
-coda = "app.app:main"
+[tool.poetry.dependencies]
+python = "^3.10"
+openai = "*"
+python-dotenv = "*"
+requests = "*"
+requests_toolbelt = "*"
+jsonschema = "*"
+backoff = "*"
+langchain = "*"
+langchain-openai = "*"
+tqdm = "*"
+chromadb = "*"
+colorama = "*"
+unidiff = "*"
+pygments = "*"
+pathspec = "*"
+InquirerPy = "*"
+tornado = "*"
+humps = "*"
+
+[tool.poetry.scripts]
+coda = "app.app:run"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

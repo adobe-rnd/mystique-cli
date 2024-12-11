@@ -1,6 +1,10 @@
 import os
+import logging
 from concurrent.futures import ThreadPoolExecutor
 import pathspec
+from app.settings import get_project_settings
+
+logger = logging.getLogger(__name__)
 
 
 class FileIndexer:
@@ -12,6 +16,7 @@ class FileIndexer:
         self.context_db = context_db
         self.max_workers = max_workers
         self.ignore_spec = self._load_gitignore()
+        self.file_patterns = get_project_settings().file_patterns
 
     def _load_gitignore(self):
         gitignore_path = os.path.join(self.project_directory, ".gitignore")
@@ -39,12 +44,14 @@ class FileIndexer:
                 if self._is_ignored(file_path):
                     continue  # Skip ignored files
 
-                if file.endswith((".js", ".html", ".css")):
+                if any(file.endswith(pattern) for pattern in self.file_patterns):
                     files_to_index.append(file_path)
 
         # Use ThreadPoolExecutor to parallelize the indexing process
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             executor.map(self._process_file, files_to_index)
+
+        return len(files_to_index)
 
     def has_been_indexed(self) -> bool:
         return not self.context_db.is_empty()
@@ -79,7 +86,7 @@ class FileIndexer:
             self.context_db.store_file(file_path=file_path, content=summary)
 
         except Exception as e:
-            print(f"Error processing {file_path}: {e}")
+            logger.error(f"Error processing {file_path}: {e}")
 
 
 if __name__ == "__main__":
@@ -95,9 +102,10 @@ if __name__ == "__main__":
         llm_client=llm_client,
         context_db=context_db,
     )
-    indexer.index_files()
+    indexed_file_count = indexer.index_files()
+    logger.info(f"Indexed {indexed_file_count} files.")
 
     prompt = "Add a card block to the home page"
     similar_files = context_db.get_similar_files(prompt)
 
-    print(f"Similar files for prompt '{prompt}': {similar_files}")
+    logger.info(f"Similar files for prompt '{prompt}': {similar_files}")
