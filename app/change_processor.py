@@ -144,7 +144,7 @@ class ChangeProcessor:
         # Start the animation in a separate thread
         stop_event = Event()
         anim_thread = Thread(
-            target=rotating_animation, args=("Rolling back changes...", stop_event)
+            target=show_rotating_animation, args=("Rolling back changes...", stop_event)
         )
         anim_thread.start()
 
