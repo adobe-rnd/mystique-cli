@@ -1,12 +1,12 @@
-# Mystique: Your AI-Powered Command Line Coding Assistant
+# AI-Powered Coding Assistant
 
-## Description
+## Overview
 
-A simple general-purpose AI coding assistant designed to simplify the process of generating, modifying, and enhancing code. By leveraging Generative AI, this tool enables developers to quickly create, modify, and enhance various code components.
+This command line tool is an AI-powered coding assistant that makes it super easy to generate, modify, and enhance code. By using Generative AI, it helps developers quickly create, tweak, and improve various code components. It's a simple project designed to show how easy it is to build such a tool from scratch and also to serve as a foundation for custom implementations.
 
 ## Installation
 
-To install the Mystique CLI locally from the current project folder, run the following command:
+To install the command line tool locally from the current project folder, run:
 
 ```bash
 pip install -e .
@@ -35,7 +35,7 @@ Replace the placeholder values with your actual API keys and endpoints.
 
 ## Usage
 
-To use Mystique CLI, execute the following command from the root directory of the project you want to modify:
+To use the command line tool, execute the following command from the root directory of the project you want to modify:
 
 ```bash
 mystique
