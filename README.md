@@ -56,24 +56,6 @@ API Provider: OpenAI
 - **Rollback Support**: Includes functionality to revert changes if needed.
 - **API Compatibility**: Works seamlessly with both Azure OpenAI and OpenAI API configurations.
 
-## Building and Publishing to PyPI
-
-To build and publish the package to PyPI using Poetry and an API token, follow these steps:
-
-1. Ensure you have Poetry installed. If not, install it by following the instructions at [Poetry's official website](https://python-poetry.org/docs/#installation).
-
-2. Configure Poetry to use your PyPI token:
-    ```bash
-    poetry config pypi-token.pypi <your-pypi-token>
-    ```
-
-3. Build and publish the package to PyPI:
-    ```bash
-    poetry publish --build
-    ```
-
-Replace the placeholder values with your actual API keys and endpoints.
-
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request to suggest improvements or report bugs.
