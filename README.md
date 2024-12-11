@@ -30,6 +30,24 @@ coda
 
 Follow the on-screen prompts to interact with the tool, generate code, and apply changes to your project.
 
+```
+_________     _________       
+__  ____/___________  /_____ _
+_  /    _  __ \  __  /_  __ `/
+/ /___  / /_/ / /_/ / / /_/ / 
+\____/  \____/\__,_/  \__,_/  
+          
+Configuration folder: /Users/vitaly/Projects/coda/.coda
+Project directory: /Users/vitaly/Projects/coda
+API Provider: OpenAI
+
+? Choose an action: 
+❯ Modify files using a prompt
+  Reindex project files
+  Change settings
+  Exit
+```
+
 ## Features
 
 - **AI-Powered Assistance**: Demonstrates how to implement AI-powered coding support for various projects.
