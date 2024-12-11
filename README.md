@@ -1,4 +1,4 @@
-# AI-Powered Coding Assistant
+# Coda: AI-Powered Coding Assistant
 
 ## Overview
 
