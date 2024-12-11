@@ -2,7 +2,7 @@
 
 ## Overview
 
-This command line tool is an AI-powered coding assistant that makes it super easy to generate, modify, and enhance code. By using Generative AI, it helps developers quickly create, tweak, and improve various code components. It's a simple project designed to show how easy it is to build such a tool from scratch and also to serve as a foundation for custom implementations.
+This command line tool is a general-purpose AI-powered coding assistant that makes it super easy to generate, modify, and enhance code. By using Generative AI, it helps developers quickly create, tweak, and improve various code components. It's a simple project designed to show how easy it is to build such a tool from scratch and also to serve as a foundation for custom implementations.
 
 ## Installation
 
@@ -38,7 +38,7 @@ Replace the placeholder values with your actual API keys and endpoints.
 To use the command line tool, execute the following command from the root directory of the project you want to modify:
 
 ```bash
-mystique
+coda
 ```
 
 Follow the on-screen prompts to interact with the tool, generate code, and apply changes to your project.

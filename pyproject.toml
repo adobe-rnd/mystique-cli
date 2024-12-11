@@ -3,7 +3,7 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "mystique"
+name = "coda"
 version = "0.1"
 description = "A general-purpose AI coding assistant."
 authors = [
@@ -29,4 +29,4 @@ dependencies = [
 ]
 
 [project.scripts]
-mystique = "app.app:main"
+coda = "app.app:main"
