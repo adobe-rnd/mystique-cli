@@ -50,11 +50,11 @@ API Provider: OpenAI
 
 ## Features
 
-- **AI-Powered Assistance**: Demonstrates how to implement AI-powered coding support for various projects.
-- **Foundation for Custom Tools**: Provides a starting point for building personalized coding assistants.
-- **Automatic File Detection**: Identifies the necessary files for modification automatically.
-- **Rollback Support**: Includes functionality to revert changes if needed.
-- **API Compatibility**: Works seamlessly with both Azure OpenAI and OpenAI API configurations.
+- **AI-Powered Help**: Easily add AI-driven coding support to your projects.
+- **Custom Tool Foundation**: A great starting point for creating your own coding assistants.
+- **Smart File Detection**: Automatically finds the files you need to work on.
+- **Undo Changes**: Built-in support to revert changes if something goes wrong.
+- **API Flexibility**: Works smoothly with both Azure OpenAI and OpenAI APIs.
 
 ## Contributing
 
