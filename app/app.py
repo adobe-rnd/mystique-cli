@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+
 import logging
 from typing import Dict
 from threading import Thread, Event
@@ -349,8 +350,14 @@ _  /    _  __ \  __  /_  __ `/
             )
             sys.exit(0)
 
-    display_main_menu(change_processor, file_indexer)
+    try:
+        display_main_menu(change_processor, file_indexer)
+    except KeyboardInterrupt:
+        handle_exit_app()
 
 
 if __name__ == "__main__":
-    run()
+    try:
+        run()
+    except KeyboardInterrupt:
+        handle_exit_app()
