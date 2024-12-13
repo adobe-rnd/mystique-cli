@@ -2,15 +2,15 @@
 
 ## Overview
 
-> This command line tool is a general-purpose AI-powered coding assistant that makes it super easy to generate, modify, and enhance code. By using Generative AI, it helps developers quickly create, tweak, and improve various code components. It's a simple project designed to show how easy it is to build such a tool from scratch and also to serve as a foundation for custom implementations.
+> This command line tool leverages AI to assist with coding tasks, making it easy to generate, modify, and enhance code. Utilizing Generative AI, it helps developers quickly create, adjust, and improve various code components. This project demonstrates the simplicity of building such a tool from scratch and serves as a foundation for custom implementations.
 
 ## Features
 
-- **AI-Powered Help**: Easily add AI-driven coding support to your projects.
-- **Custom Tool Foundation**: A great starting point for creating your own coding assistants.
-- **Smart File Detection**: Automatically finds the files you need to work on.
-- **Undo Changes**: Built-in support to revert changes if something goes wrong.
-- **API Flexibility**: Works smoothly with both Azure OpenAI and OpenAI APIs.
+- **Smart File Detection**: Automatically identifies the files you need to work on.
+- **Undo Changes**: Easily revert changes if something goes wrong.
+- **API Flexibility**: Compatible with both Azure OpenAI and OpenAI APIs.
+- **Respects .gitignore**: Excludes files and directories specified in `.gitignore` during indexing.
+- **Custom Tool Foundation**: A solid starting point for creating your own coding assistants.
 
 ## Installation
 
