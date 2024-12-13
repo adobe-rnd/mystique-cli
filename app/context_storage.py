@@ -60,5 +60,3 @@ if __name__ == "__main__":
 
     similar_files = context_db.get_similar_files(prompt="example prompt")
     logger.info(similar_files)
-
-    logger.info(f"Is the database empty? {context_db.is_empty()}")

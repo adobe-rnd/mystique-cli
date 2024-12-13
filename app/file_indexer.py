@@ -70,22 +70,23 @@ class FileIndexer:
             # Generate a summary of the file content
             summary = self.llm_client.generate_completion(
                 f"""
-            We are indexing source code files in a project to enhance search and retrieval capabilities.
-            
-            Please provide a concise yet comprehensive summary of the file's content, purpose, and functionality. Focus on key elements such as:
-            
-            - Main functionality and purpose of the file.
-            - Key classes, functions, and their roles.
-            - Important logic, algorithms, or workflows implemented.
-            - Any unique or notable aspects of the code, such as patterns, optimizations, or dependencies.
-            
-            The summary will be used to determine the file's relevance to user queries.
-            
-            File content:
-            {file_content}
-            
-            Summary:
-            """
+                We are indexing source code files in a project to enhance search and retrieval capabilities.
+
+                === Instructions ===
+                Please provide a concise yet comprehensive summary of the file's content, purpose, and functionality. Focus on key elements such as:
+                
+                - Main functionality and purpose of the file.
+                - Key classes, functions, and their roles.
+                - Important logic, algorithms, or workflows implemented.
+                - Any unique or notable aspects of the code, such as patterns, optimizations, or dependencies.
+                
+                The summary will be used to determine the file's relevance to user queries.
+                
+                === File Content ===
+                {file_content}
+                
+                === Summary ===
+                """
             )
 
             self.context_db.store_file(file_path=file_path, content=summary)

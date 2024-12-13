@@ -19,7 +19,7 @@ class ProjectSettings(BaseModel):
     azure_endpoint: Optional[str] = None
     azure_completion_model: Optional[str] = None
     azure_embedding_model: Optional[str] = None
-    log_level: Optional[str] = "ERROR"
+    log_level: Optional[str] = "INFO"
     file_patterns: Optional[List[str]] = [
         ".js",
         ".html",

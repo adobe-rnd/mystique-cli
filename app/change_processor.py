@@ -3,6 +3,9 @@ import os
 from threading import Thread, Event
 import logging
 
+from colorama import Fore
+
+from app.settings import BASE_DIR
 from app.shared import show_rotating_animation
 from app.context_storage import ContextStorage
 from app.llm_client import LlmClient
@@ -40,6 +43,19 @@ class ChangeProcessor:
         self.context_db = context_db
         self.project_directory = os.path.abspath(project_directory)
 
+    def load_additional_context(self) -> str:
+        context_folder = os.path.join(BASE_DIR, "context")
+        additional_context = ""
+        context_files_count = 0
+        if os.path.exists(context_folder):
+            for file_name in os.listdir(context_folder):
+                file_path = os.path.join(context_folder, file_name)
+                if os.path.isfile(file_path) and file_name.endswith(".txt"):
+                    with open(file_path, "r", encoding="utf-8") as file:
+                        additional_context += file.read() + "\n"
+                    context_files_count += 1
+        return additional_context, context_files_count
+
     def compute_changes(self, prompt: str) -> Dict[str, any]:
         similar_files = self.context_db.get_similar_files(prompt, TOP_N_SIMILAR_FILES)
         file_contents = []
@@ -49,20 +65,30 @@ class ChangeProcessor:
             with open(full_path, "r", encoding="utf-8") as file:
                 content = file.read()
                 file_contents.append(f"### File: {file_path}\n{content}\n")
-        logger.info("Files pulled successfully (RAG)...")
+
+        additional_context, context_files_count = self.load_additional_context()
+
+        # Display the number of files read and the number of project files pulled
+        print(Fore.CYAN + f"Total files analyzed: {len(similar_files)}")
+        print(Fore.CYAN + f"Context files loaded: {context_files_count}")
 
         llm_prompt = f"""
-        You have been provided with the content of the following files:
+        You are an expert software engineer. Your task is to modify the provided files to fulfill the user's request.
+
+        === Relevant Files ===
         {'\n\n'.join(file_contents)}
         
-        And the user's request:
+        === Additional Context ===
+        {additional_context}
+        
+        === User's Request ===
         {prompt}
         
-        Your task is to:
-        
-        1. **Analyze** the provided files to understand their current functionality and determine the changes required to satisfy the user's request.
-        2. **Modify** the files with precise and minimal changes necessary to fulfill the requirements specified.
-        3. **Output** the modifications in a JSON format as specified below:
+        === Instructions ===
+        1. Analyze the provided files to understand their current functionality.
+        2. Determine the changes required to satisfy the user's request.
+        3. Modify the files with precise and minimal changes necessary to fulfill the requirements.
+        4. Output the modifications in the following JSON format:
             {{
                 "files": [
                     {{
@@ -76,8 +102,8 @@ class ChangeProcessor:
                     ...
                 ]
             }}
-        4. **Provide** the complete modified source code for each changed file in the 'new_content' field.
-        5. **Never remove** any existing code unless it is redundant or obsolete.
+        5. Provide the complete modified source code for each changed file in the 'new_content' field.
+        6. Do not remove any existing code unless it is redundant or obsolete.
         
         Ensure your modifications are accurate, concise, and directly address the user's request.
         """

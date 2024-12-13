@@ -87,7 +87,7 @@ def check_essential_config_values():
 
 
 def perform_indexing(file_indexer):
-    logger.info("Indexing (RAG) in progress... This might take a few moments.")
+    logger.info("Starting the indexing process...")
 
     try:
         files_to_index = file_indexer.get_files_to_index()
@@ -122,7 +122,7 @@ def handle_process_changes(change_processor):
     changes = change_processor.compute_changes(prompt)
 
     if not changes:
-        logger.error("No changes were made.")
+        logger.info("No changes were made.")
         return
 
     logger.info("The following files were changed:")
@@ -147,7 +147,7 @@ def confirm_or_reject_changes(changes: Dict[str, any], change_processor):
         changes_made.append(previous_file_states)
         logger.info("Changes have been accepted.")
     elif decision == "reject":
-        logger.error("Changes have been rejected.")
+        logger.info("Changes have been rejected.")
 
 
 def revert_changes(change_processor):
@@ -161,7 +161,7 @@ def revert_changes(change_processor):
         change_processor.rollback_changes(last_change)
         logger.info("Rollback complete.")
     else:
-        logger.error("No changes are available to rollback.")
+        logger.info("No changes are available to rollback.")
 
 
 def update_api_secrets():

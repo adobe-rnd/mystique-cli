@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "coda-ai-assistant"
-version = "0.0.2"
+version = "0.0.3"
 description = "A general-purpose AI coding assistant"
 authors = ["Vitaly Tsaplin"]
 license = "MIT"
